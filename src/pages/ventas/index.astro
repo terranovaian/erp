@@ -1,0 +1,24 @@
+---
+import { MainLayout } from "../../layouts/MainLayout";
+import "../../styles/index.css";
+
+const currentPath = Astro.url.pathname;
+---
+
+<html lang="es">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<title>Ventas - ERP</title>
+	</head>
+	<body>
+		<MainLayout currentPath={currentPath} client:load>
+			<div class="flex items-center justify-center h-full text-gray-500">
+				<h2 class="text-xl font-medium">
+					Módulo de Ventas (Próximamente)
+				</h2>
+			</div>
+		</MainLayout>
+	</body>
+</html>

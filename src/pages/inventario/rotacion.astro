@@ -1,0 +1,21 @@
+---
+import { MainLayout } from "../../layouts/MainLayout";
+import { RotationView } from "../../components/inventario/Rotation";
+import "../../index.css";
+
+const currentPath = Astro.url.pathname;
+---
+
+<html lang="es">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<title>Rotación - ERP</title>
+	</head>
+	<body>
+		<MainLayout currentPath={currentPath} client:load>
+			<RotationView client:load />
+		</MainLayout>
+	</body>
+</html>
