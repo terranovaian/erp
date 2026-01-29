@@ -1,6 +1,7 @@
 ---
 import { MainLayout } from "../../layouts/MainLayout";
 import "../../index.css";
+import { ProductManager } from "../../components/deposito/ProductManager";
 
 const currentPath = Astro.url.pathname;
 ---
@@ -13,6 +14,8 @@ const currentPath = Astro.url.pathname;
         <title>ERP</title>
     </head>
     <body>
-        <MainLayout currentPath={currentPath} client:load />
+        <MainLayout currentPath={currentPath} client:load>
+            <ProductManager client:load />
+        </MainLayout>
     </body>
 </html>
