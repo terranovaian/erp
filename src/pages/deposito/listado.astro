@@ -1,21 +1,13 @@
 ---
+import Layout from "../../layouts/Layout.astro";
 import { MainLayout } from "../../layouts/MainLayout";
-import "../../index.css";
 import { InventoryList } from "../../components/deposito/InventoryList";
 
 const currentPath = Astro.url.pathname;
 ---
 
-<html lang="es">
-    <head>
-        <meta charset="utf-8" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <meta name="viewport" content="width=device-width" />
-        <title>ERP</title>
-    </head>
-    <body>
-        <MainLayout currentPath={currentPath} client:load>
-            <InventoryList client:load />
-        </MainLayout>
-    </body>
-</html>
+<Layout title="Listado de Stock - ERP">
+    <MainLayout currentPath={currentPath} client:load>
+        <InventoryList client:load />
+    </MainLayout>
+</Layout>

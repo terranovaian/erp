@@ -1,23 +1,15 @@
 ---
-import { MainLayout } from '../layouts/MainLayout';
-import { IntegrationsView } from '../components/integraciones/Integrations';
-import '../index.css';
+import Layout from "../layouts/Layout.astro";
+import { MainLayout } from "../layouts/MainLayout";
+import { IntegrationsView } from "../components/integraciones/Integrations";
 
 const currentPath = Astro.url.pathname;
 ---
 
-<html lang="es">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<title>Integraciones - ERP</title>
-	</head>
-	<body>
-        <MainLayout currentPath={currentPath} client:load>
-            <div class="h-full flex flex-col">
-                <IntegrationsView client:load />
-            </div>
-        </MainLayout>
-	</body>
-</html>
+<Layout title="Integraciones - ERP">
+	<MainLayout currentPath={currentPath} client:load>
+		<div class="h-full flex flex-col">
+			<IntegrationsView client:load />
+		</div>
+	</MainLayout>
+</Layout>

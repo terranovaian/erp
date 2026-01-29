@@ -24,6 +24,7 @@ import {
     Menu,
     type LucideIcon
 } from 'lucide-react';
+import { ThemeToggle } from './ThemeToggle';
 
 interface SidebarProps {
     sidebarOpen: boolean;
@@ -67,9 +68,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen, c
 
     const NavItem = ({ href, label, icon: Icon, isSubItem = false, activeColor = 'blue', sidebarOpen = true }: { href: string, label: string, icon: LucideIcon, isSubItem?: boolean, activeColor?: 'blue' | 'orange', sidebarOpen?: boolean }) => {
         const activeStyles = activeColor === 'orange'
-            ? 'bg-orange-50 text-orange-700 font-medium'
-            : 'bg-blue-50 text-blue-700 font-medium';
-        const iconActiveColor = activeColor === 'orange' ? 'text-orange-600' : 'text-blue-600';
+            ? 'bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-400 font-medium'
+            : 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 font-medium';
+        const iconActiveColor = activeColor === 'orange' ? 'text-orange-600 dark:text-orange-400' : 'text-blue-600 dark:text-blue-400';
 
         return (
             <a href={href}
@@ -77,7 +78,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen, c
                 className={`w-full flex items-center rounded-lg text-sm transition-all mb-1
                 ${isExactActive(href)
                         ? activeStyles
-                        : 'text-gray-600 hover:bg-gray-50'
+                        : 'text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-800'
                     } ${sidebarOpen ? 'px-3 py-2 gap-3' : 'justify-center py-2 px-0'} 
                     ${isSubItem && sidebarOpen ? 'pl-10' : ''}`}
             >
@@ -88,20 +89,20 @@ export const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen, c
     };
 
     return (
-        <aside className={`bg-white border-r border-gray-200 flex-shrink-0 transition-all duration-300 absolute md:relative z-50 h-full ${sidebarOpen ? 'w-64 translate-x-0' : '-translate-x-full md:translate-x-0 md:w-20'} flex flex-col`}>
-            <div className="p-4 border-b border-gray-100 flex items-center justify-between h-16">
+        <aside className={`bg-white dark:bg-slate-900 border-r border-gray-200 dark:border-slate-800 flex-shrink-0 transition-all duration-300 absolute md:relative z-50 h-full ${sidebarOpen ? 'w-64 translate-x-0' : '-translate-x-full md:translate-x-0 md:w-20'} flex flex-col`}>
+            <div className="p-4 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between h-16">
                 <div className={`flex items-center gap-2 ${!sidebarOpen && 'md:justify-center w-full'}`}>
                     <div className="w-8 h-8 bg-orange-600 rounded-lg flex items-center justify-center text-white font-bold shadow-lg shadow-orange-200">
                         D
                     </div>
                     {sidebarOpen && (
                         <div className="flex flex-col">
-                            <span className="font-bold text-lg leading-none tracking-tight text-gray-800">Depósito <span className="text-orange-600">Pro</span></span>
+                            <span className="font-bold text-lg leading-none tracking-tight text-gray-800 dark:text-gray-100">Depósito <span className="text-orange-600 dark:text-orange-500">Pro</span></span>
                         </div>
                     )}
                 </div>
                 {sidebarOpen && (
-                    <button onClick={() => setSidebarOpen(false)} className="text-gray-400 hover:text-gray-600 hover:bg-gray-50 p-1.5 rounded-lg transition-colors">
+                    <button onClick={() => setSidebarOpen(false)} className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 p-1.5 rounded-lg transition-colors">
                         <Menu size={20} />
                     </button>
                 )}
@@ -112,7 +113,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen, c
                 <div className="mb-2">
                     <a href="/ventas"
                         title={!sidebarOpen ? 'Ventas' : ''}
-                        className={`w-full flex items-center rounded-lg transition-all ${isActive('/ventas') ? 'bg-blue-50 text-blue-700' : 'text-gray-600 hover:bg-gray-50'} ${sidebarOpen ? 'px-3 py-2 gap-3' : 'justify-center py-2 px-0'}`}>
+                        className={`w-full flex items-center rounded-lg transition-all ${isActive('/ventas') ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400' : 'text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-800'} ${sidebarOpen ? 'px-3 py-2 gap-3' : 'justify-center py-2 px-0'}`}>
                         <ShoppingCart size={20} className={isActive('/ventas') ? 'text-blue-600' : 'text-gray-400'} />
                         {sidebarOpen && <span className="text-sm">Ventas</span>}
                     </a>
@@ -123,7 +124,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen, c
                     <button
                         onClick={() => setDepositoExpanded(!depositoExpanded)}
                         title={!sidebarOpen ? 'Gestión de Depósito' : ''}
-                        className={`w-full flex items-center justify-between rounded-lg transition-all ${isActive('/deposito') ? 'text-blue-700 bg-blue-50/50' : 'text-gray-700 hover:bg-gray-50'} ${sidebarOpen ? 'px-3 py-2' : 'justify-center py-2 px-0'}`}
+                        className={`w-full flex items-center justify-between rounded-lg transition-all ${isActive('/deposito') ? 'text-blue-700 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/10' : 'text-gray-700 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-800'} ${sidebarOpen ? 'px-3 py-2' : 'justify-center py-2 px-0'}`}
                     >
                         <div className="flex items-center gap-3">
                             <Warehouse size={20} className={isActive('/deposito') ? 'text-blue-600' : 'text-orange-600'} />
@@ -147,7 +148,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen, c
                     <button
                         onClick={() => setInventoryExpanded(!inventoryExpanded)}
                         title={!sidebarOpen ? 'Inventario' : ''}
-                        className={`w-full flex items-center justify-between rounded-lg transition-all ${isActive('/inventario') ? 'text-blue-700 bg-blue-50/50' : 'text-gray-700 hover:bg-gray-50'} ${sidebarOpen ? 'px-3 py-2' : 'justify-center py-2 px-0'}`}
+                        className={`w-full flex items-center justify-between rounded-lg transition-all ${isActive('/inventario') ? 'text-blue-700 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/10' : 'text-gray-700 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-800'} ${sidebarOpen ? 'px-3 py-2' : 'justify-center py-2 px-0'}`}
                     >
                         <div className="flex items-center gap-3">
                             <Box size={20} className={isActive('/inventario') ? 'text-blue-600' : 'text-blue-600'} />
@@ -172,7 +173,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen, c
                 <div className="mb-2">
                     <a href="/integraciones"
                         title={!sidebarOpen ? 'Integraciones' : ''}
-                        className={`w-full flex items-center rounded-lg transition-all ${isActive('/integraciones') ? 'bg-blue-50 text-blue-700' : 'text-gray-600 hover:bg-gray-50'} ${sidebarOpen ? 'px-3 py-2 gap-3' : 'justify-center py-2 px-0'}`}>
+                        className={`w-full flex items-center rounded-lg transition-all ${isActive('/integraciones') ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400' : 'text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-800'} ${sidebarOpen ? 'px-3 py-2 gap-3' : 'justify-center py-2 px-0'}`}>
                         <Plug size={20} className={isActive('/integraciones') ? 'text-blue-600' : 'text-gray-400'} />
                         {sidebarOpen && <span className="text-sm">Integraciones</span>}
                     </a>
@@ -183,7 +184,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen, c
                     <button
                         onClick={() => setHerramientasExpanded(!herramientasExpanded)}
                         title={!sidebarOpen ? 'Herramientas' : ''}
-                        className={`w-full flex items-center justify-between rounded-lg transition-all ${isActive('/herramientas') ? 'text-blue-700 bg-blue-50/50' : 'text-gray-700 hover:bg-gray-50'} ${sidebarOpen ? 'px-3 py-2' : 'justify-center py-2 px-0'}`}
+                        className={`w-full flex items-center justify-between rounded-lg transition-all ${isActive('/herramientas') ? 'text-blue-700 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/10' : 'text-gray-700 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-800'} ${sidebarOpen ? 'px-3 py-2' : 'justify-center py-2 px-0'}`}
                     >
                         <div className="flex items-center gap-3">
                             <Wrench size={20} className={isActive('/herramientas') ? 'text-blue-600' : 'text-purple-600'} />
@@ -205,14 +206,19 @@ export const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen, c
                 </div>
             </div>
 
-            <div className={`p-4 border-t border-gray-100 mt-auto ${!sidebarOpen && 'flex justify-center'}`}>
-                <button className={`flex items-center gap-3 text-sm text-gray-500 hover:text-gray-800 w-full rounded-lg hover:bg-gray-50 transition-colors ${sidebarOpen ? 'px-2 py-2' : 'justify-center py-2 px-0'}`}>
-                    <div className="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center font-bold text-orange-700 border border-orange-200 flex-shrink-0">
+            <div className={`p-4 border-t border-gray-100 dark:border-slate-800 mt-auto ${!sidebarOpen && 'flex justify-center flex-col items-center gap-4'}`}>
+                <div className={`flex ${!sidebarOpen ? 'justify-center' : 'justify-between'} items-center mb-2`}>
+                    {sidebarOpen && <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Tema</span>}
+                    <ThemeToggle />
+                </div>
+                <div className={`w-full h-px bg-gray-100 dark:bg-slate-800 mb-2 ${!sidebarOpen ? 'hidden' : ''}`} />
+                <button className={`flex items-center gap-3 text-sm text-gray-500 dark:text-slate-400 hover:text-gray-800 dark:hover:text-slate-200 w-full rounded-lg hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors ${sidebarOpen ? 'px-2 py-2' : 'justify-center py-2 px-0'}`}>
+                    <div className="w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center font-bold text-orange-700 dark:text-orange-400 border border-orange-200 dark:border-orange-800 flex-shrink-0">
                         A
                     </div>
                     {sidebarOpen && <div className="text-left">
-                        <p className="font-bold text-gray-800 leading-tight">Admin User</p>
-                        <p className="text-[10px] text-gray-400">admin@empresa.com</p>
+                        <p className="font-bold text-gray-800 dark:text-slate-200 leading-tight">Admin User</p>
+                        <p className="text-[10px] text-gray-400 dark:text-slate-500">admin@empresa.com</p>
                     </div>}
                 </button>
             </div>

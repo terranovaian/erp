@@ -6,7 +6,7 @@ import { StockControlView } from './components/views/StockControlView';
 import { StockHistoryView } from './components/views/StockHistoryView';
 import { ValuationView } from './components/views/ValuationView';
 import { RotationView } from './components/views/RotationView';
-import './index.css';
+import './styles/index.css';
 
 // Error Boundary Component
 class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean, error: any }> {

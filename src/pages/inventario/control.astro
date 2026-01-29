@@ -1,21 +1,13 @@
 ---
+import Layout from "../../layouts/Layout.astro";
 import { MainLayout } from "../../layouts/MainLayout";
 import { StockControlWrapper } from "../../components/inventario/StockControlWrapper";
-import "../../index.css";
 
 const currentPath = Astro.url.pathname;
 ---
 
-<html lang="es">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<title>Control de Stock - ERP</title>
-	</head>
-	<body>
-		<MainLayout currentPath={currentPath} client:load>
-			<StockControlWrapper client:only="react" />
-		</MainLayout>
-	</body>
-</html>
+<Layout title="Control de Stock - ERP">
+	<MainLayout currentPath={currentPath} client:load>
+		<StockControlWrapper client:only="react" />
+	</MainLayout>
+</Layout>

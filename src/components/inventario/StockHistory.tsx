@@ -110,8 +110,8 @@ export const StockHistoryView: React.FC = () => {
         const isPositive = diff > 0;
         // Estilo Badge Soft: Fondo muy suave, borde sutil, texto legible pero no neón
         const styles = isPositive
-            ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
-            : 'bg-rose-50 text-rose-700 border-rose-200';
+            ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800'
+            : 'bg-rose-50 dark:bg-rose-900/20 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-800';
 
         return (
             <div className="flex flex-col items-start gap-1 pl-4">
@@ -121,9 +121,9 @@ export const StockHistoryView: React.FC = () => {
                 </span>
 
                 {/* Detalle secundario (Transición) */}
-                <div className="flex items-center gap-1 text-[10px] text-gray-400 pl-0.5">
+                <div className="flex items-center gap-1 text-[10px] text-gray-400 dark:text-slate-500 pl-0.5">
                     <span>{oldS}</span>
-                    <ArrowRight size={10} className="text-gray-300" />
+                    <ArrowRight size={10} className="text-gray-300 dark:text-slate-600" />
                     <span>{newS}</span>
                 </div>
             </div>
@@ -132,13 +132,13 @@ export const StockHistoryView: React.FC = () => {
 
     // --- RENDERIZADO DE ACTOR (PASTEL SOFT) ---
     const renderActor = (log: StockLog) => {
-        let styles = 'bg-slate-50 border-slate-200 text-slate-700';
+        let styles = 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300';
         let Icon = User;
 
-        if (log.actor.includes('MercadoLibre')) { styles = 'bg-[#fff9c4] border-[#f0e68c] text-yellow-900'; Icon = ShoppingBag; }
-        else if (log.actor.includes('Woo')) { styles = 'bg-purple-50 border-purple-200 text-purple-800'; Icon = ShoppingBag; }
-        else if (log.actor.includes('Fravega') || log.actor.includes('TiendaNube')) { styles = 'bg-indigo-50 border-indigo-200 text-indigo-800'; Icon = ShoppingBag; }
-        else if (log.actor.includes('Bot') || log.actor === 'Sistema') { styles = 'bg-orange-50 border-orange-200 text-orange-900'; Icon = Bot; }
+        if (log.actor.includes('MercadoLibre')) { styles = 'bg-[#fff9c4] dark:bg-yellow-900/30 border-[#f0e68c] dark:border-yellow-800 text-yellow-900 dark:text-yellow-300'; Icon = ShoppingBag; }
+        else if (log.actor.includes('Woo')) { styles = 'bg-purple-50 dark:bg-purple-900/20 border-purple-200 dark:border-purple-800 text-purple-800 dark:text-purple-300'; Icon = ShoppingBag; }
+        else if (log.actor.includes('Fravega') || log.actor.includes('TiendaNube')) { styles = 'bg-indigo-50 dark:bg-indigo-900/20 border-indigo-200 dark:border-indigo-800 text-indigo-800 dark:text-indigo-300'; Icon = ShoppingBag; }
+        else if (log.actor.includes('Bot') || log.actor === 'Sistema') { styles = 'bg-orange-50 dark:bg-orange-900/20 border-orange-200 dark:border-orange-800 text-orange-900 dark:text-orange-300'; Icon = Bot; }
 
         return (
             <div className={`flex items-center gap-2.5 px-3 py-1.5 rounded-lg border ${styles} w-[170px] transition-all hover:brightness-95 shadow-sm mx-auto cursor-default`}>
@@ -150,33 +150,34 @@ export const StockHistoryView: React.FC = () => {
 
     const renderBadge = (type: LogType) => {
         const styles = {
-            sale: 'bg-green-100 text-green-700 border-green-200',
-            manual: 'bg-blue-100 text-blue-700 border-blue-200',
-            auto_rule: 'bg-purple-100 text-purple-700 border-purple-200',
-            entry: 'bg-emerald-100 text-emerald-700 border-emerald-200',
-            error: 'bg-red-100 text-red-700 border-red-200',
-            sync: 'bg-indigo-100 text-indigo-700 border-indigo-200'
+            sale: 'bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400 border-green-200 dark:border-green-800',
+            manual: 'bg-blue-100 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-800',
+            auto_rule: 'bg-purple-100 dark:bg-purple-900/20 text-purple-700 dark:text-purple-400 border-purple-200 dark:border-purple-800',
+            entry: 'bg-emerald-100 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800',
+            error: 'bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-400 border-red-200 dark:border-red-800',
+            sync: 'bg-indigo-100 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-400 border-indigo-200 dark:border-indigo-800'
         };
         const labels = { sale: 'Venta', manual: 'Manual', auto_rule: 'Auto', entry: 'Ingreso', error: 'Error', sync: 'Sync' };
         return (
-            <span className={`px-2 py-0.5 text-[9px] font-black uppercase tracking-widest rounded border ${styles[type] || 'bg-gray-100'}`}>
+            <span className={`px-2 py-0.5 text-[9px] font-black uppercase tracking-widest rounded border ${styles[type] || 'bg-gray-100 dark:bg-slate-800'}`}>
                 {labels[type]}
             </span>
         );
     };
 
     return (
-        <div className="space-y-6 animate-fade-in pb-10 flex flex-col h-full bg-gray-50/30">
+        <div className="space-y-6 animate-fade-in pb-10 flex flex-col h-full bg-gray-50/30 dark:bg-slate-900/20">
             {/* Toolbar Principal - Diseño Compacto Enterprise */}
-            <div className="flex flex-col xl:flex-row justify-between gap-4 bg-white p-4 rounded-2xl border border-gray-200 shadow-sm flex-shrink-0 mx-1">
+            <div className="flex flex-col xl:flex-row justify-between gap-4 bg-white dark:bg-slate-900 p-4 rounded-2xl border border-gray-200 dark:border-slate-800 shadow-sm flex-shrink-0 mx-1">
                 <div className="flex flex-col sm:flex-row gap-3 w-full xl:w-auto">
                     {/* Búsqueda */}
+                    {/* Búsqueda */}
                     <div className="relative flex-1 sm:w-72 group">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-500 transition-colors" size={16} />
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-slate-500 group-focus-within:text-blue-500 dark:group-focus-within:text-blue-400 transition-colors" size={16} />
                         <input
                             type="text"
                             placeholder="Buscar por producto, SKU o canal..."
-                            className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-100 rounded-xl text-sm outline-none focus:border-blue-500 focus:bg-white transition-all shadow-inner"
+                            className="w-full pl-10 pr-4 py-2 bg-gray-50 dark:bg-slate-800 border border-gray-100 dark:border-slate-700 rounded-xl text-sm outline-none focus:border-blue-500 dark:focus:border-blue-500 focus:bg-white dark:focus:bg-slate-900 dark:text-slate-200 transition-all shadow-inner dark:shadow-none"
                             value={searchTerm}
                             onChange={e => setSearchTerm(e.target.value)}
                         />
@@ -186,23 +187,23 @@ export const StockHistoryView: React.FC = () => {
                     <div className="relative">
                         <button
                             onClick={() => setIsDateOpen(!isDateOpen)}
-                            className="flex items-center gap-3 pl-10 pr-4 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 font-bold hover:border-gray-300 outline-none focus:border-blue-500 transition-all shadow-sm min-w-[260px]"
+                            className="flex items-center gap-3 pl-10 pr-4 py-2 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-xl text-sm text-gray-700 dark:text-slate-200 font-bold hover:border-gray-300 dark:hover:border-slate-600 outline-none focus:border-blue-500 transition-all shadow-sm min-w-[260px]"
                         >
-                            <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
+                            <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-slate-500" size={16} />
                             <div className="flex flex-col items-start leading-tight">
-                                <span className="font-black text-gray-900">{selectedLabel}</span>
-                                <span className="text-[10px] text-gray-400 font-medium">Auditoría Temporal</span>
+                                <span className="font-black text-gray-900 dark:text-slate-100">{selectedLabel}</span>
+                                <span className="text-[10px] text-gray-400 dark:text-slate-500 font-medium">Auditoría Temporal</span>
                             </div>
-                            <ChevronDown className={`ml-auto text-gray-400 transition-transform ${isDateOpen ? 'rotate-180' : ''}`} size={14} />
+                            <ChevronDown className={`ml-auto text-gray-400 dark:text-slate-500 transition-transform ${isDateOpen ? 'rotate-180' : ''}`} size={14} />
                         </button>
 
                         {isDateOpen && (
                             <>
                                 <div className="fixed inset-0 z-40" onClick={() => { setIsDateOpen(false); setDateMode('list'); }}></div>
-                                <div className="absolute top-full left-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 py-2 z-50 animate-zoom-in origin-top-left overflow-hidden min-w-[320px]">
+                                <div className="absolute top-full left-0 mt-2 bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-gray-100 dark:border-slate-800 py-2 z-50 animate-zoom-in origin-top-left overflow-hidden min-w-[320px]">
                                     {dateMode === 'list' ? (
                                         <>
-                                            <div className="px-4 py-3 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] bg-gray-50/80 mb-1 border-b border-gray-100 text-center">
+                                            <div className="px-4 py-3 text-[10px] font-black text-gray-400 dark:text-slate-500 uppercase tracking-[0.2em] bg-gray-50/80 dark:bg-slate-800/80 mb-1 border-b border-gray-100 dark:border-slate-800 text-center">
                                                 Seleccionar Período
                                             </div>
                                             <div className="max-h-[350px] overflow-y-auto">
@@ -210,14 +211,14 @@ export const StockHistoryView: React.FC = () => {
                                                     <button
                                                         key={label}
                                                         onClick={() => { setSelectedLabel(label); setIsDateOpen(false); }}
-                                                        className={`w-full text-left px-5 py-4 text-sm font-bold transition-all border-l-4 ${selectedLabel === label ? 'bg-blue-50 text-blue-700 border-blue-600' : 'text-gray-600 border-transparent hover:bg-gray-50'}`}
+                                                        className={`w-full text-left px-5 py-4 text-sm font-bold transition-all border-l-4 ${selectedLabel === label ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 border-blue-600 dark:border-blue-500' : 'text-gray-600 dark:text-slate-300 border-transparent hover:bg-gray-50 dark:hover:bg-slate-800'}`}
                                                     >
                                                         {label}
                                                     </button>
                                                 ))}
                                                 <button
                                                     onClick={() => setDateMode('calendar')}
-                                                    className="w-full text-left px-5 py-5 text-sm font-black text-blue-600 hover:bg-blue-50 flex items-center justify-between border-t border-gray-100 group transition-all"
+                                                    className="w-full text-left px-5 py-5 text-sm font-black text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 flex items-center justify-between border-t border-gray-100 dark:border-slate-800 group transition-all"
                                                 >
                                                     Elegir Rango Personalizado <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
                                                 </button>
@@ -225,19 +226,19 @@ export const StockHistoryView: React.FC = () => {
                                         </>
                                     ) : (
                                         <div className="p-5 w-[340px]">
-                                            <div className="flex items-center justify-between mb-5 pb-3 border-b border-gray-100">
-                                                <button onClick={() => setDateMode('list')} className="p-1 hover:bg-gray-100 rounded-lg text-gray-400 hover:text-gray-950 flex items-center gap-1 text-[10px] font-black uppercase tracking-widest transition-colors">
+                                            <div className="flex items-center justify-between mb-5 pb-3 border-b border-gray-100 dark:border-slate-800">
+                                                <button onClick={() => setDateMode('list')} className="p-1 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg text-gray-400 dark:text-slate-500 hover:text-gray-950 dark:hover:text-slate-200 flex items-center gap-1 text-[10px] font-black uppercase tracking-widest transition-colors">
                                                     <ChevronLeft size={16} /> Volver
                                                 </button>
                                                 <div className="flex items-center gap-3">
-                                                    <button onClick={() => handleMonthChange(-1)} className="p-1.5 hover:bg-gray-100 rounded-full text-gray-400"><ChevronLeft size={16} /></button>
-                                                    <span className="text-xs font-black text-gray-900 min-w-[100px] text-center capitalize tracking-tighter">
+                                                    <button onClick={() => handleMonthChange(-1)} className="p-1.5 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-full text-gray-400 dark:text-slate-500"><ChevronLeft size={16} /></button>
+                                                    <span className="text-xs font-black text-gray-900 dark:text-slate-200 min-w-[100px] text-center capitalize tracking-tighter">
                                                         {currentCalendarMonth.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' })}
                                                     </span>
-                                                    <button onClick={() => handleMonthChange(1)} className="p-1.5 hover:bg-gray-100 rounded-full text-gray-400"><ChevronRight size={16} /></button>
+                                                    <button onClick={() => handleMonthChange(1)} className="p-1.5 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-full text-gray-400 dark:text-slate-500"><ChevronRight size={16} /></button>
                                                 </div>
                                             </div>
-                                            <div className="grid grid-cols-7 gap-1.5 mb-3 text-center text-[10px] font-black text-gray-300 uppercase">
+                                            <div className="grid grid-cols-7 gap-1.5 mb-3 text-center text-[10px] font-black text-gray-300 dark:text-slate-600 uppercase">
                                                 {['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'].map(d => <div key={d}>{d}</div>)}
                                             </div>
                                             <div className="grid grid-cols-7 gap-1.5">
@@ -251,16 +252,16 @@ export const StockHistoryView: React.FC = () => {
                                                         <button
                                                             key={day}
                                                             onClick={() => handleDateClick(day)}
-                                                            className={`h-9 w-9 rounded-xl text-xs transition-all flex items-center justify-center font-bold ${isSelected ? 'bg-blue-600 text-white font-black shadow-lg shadow-blue-100 scale-110' : isInRange ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-100'}`}
+                                                            className={`h-9 w-9 rounded-xl text-xs transition-all flex items-center justify-center font-bold ${isSelected ? 'bg-blue-600 text-white font-black shadow-lg shadow-blue-100 dark:shadow-blue-900/50 scale-110' : isInRange ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' : 'text-gray-600 dark:text-slate-400 hover:bg-gray-100 dark:hover:bg-slate-800'}`}
                                                         >
                                                             {day}
                                                         </button>
                                                     );
                                                 })}
                                             </div>
-                                            <div className="flex items-center justify-end gap-3 mt-8 pt-5 border-t border-gray-100">
-                                                <button onClick={() => { setDateMode('list'); setIsDateOpen(false); }} className="text-xs font-black text-gray-400 hover:text-gray-900 transition-colors px-4 py-2">Cancelar</button>
-                                                <button onClick={applyCustomRange} disabled={!startDate} className="bg-blue-600 text-white text-[11px] font-black uppercase tracking-wider px-6 py-2.5 rounded-xl shadow-xl shadow-blue-100 hover:bg-blue-700 disabled:opacity-20 disabled:shadow-none transition-all active:scale-95">Aplicar Rango</button>
+                                            <div className="flex items-center justify-end gap-3 mt-8 pt-5 border-t border-gray-100 dark:border-slate-800">
+                                                <button onClick={() => { setDateMode('list'); setIsDateOpen(false); }} className="text-xs font-black text-gray-400 dark:text-slate-500 hover:text-gray-900 dark:hover:text-slate-200 transition-colors px-4 py-2">Cancelar</button>
+                                                <button onClick={applyCustomRange} disabled={!startDate} className="bg-blue-600 text-white text-[11px] font-black uppercase tracking-wider px-6 py-2.5 rounded-xl shadow-xl shadow-blue-100 dark:shadow-blue-900/50 hover:bg-blue-700 disabled:opacity-20 disabled:shadow-none transition-all active:scale-95">Aplicar Rango</button>
                                             </div>
                                         </div>
                                     )}
@@ -271,54 +272,54 @@ export const StockHistoryView: React.FC = () => {
                 </div>
 
                 <div className="flex items-center gap-3">
-                    <div className="hidden lg:flex items-center gap-2 pr-5 border-r border-gray-100 h-8">
-                        <Filter size={14} className="text-gray-400" />
+                    <div className="hidden lg:flex items-center gap-2 pr-5 border-r border-gray-100 dark:border-slate-800 h-8">
+                        <Filter size={14} className="text-gray-400 dark:text-slate-500" />
                         <select
-                            className="text-[10px] font-black text-gray-500 uppercase tracking-[0.15em] bg-transparent outline-none cursor-pointer hover:text-gray-900 transition-colors"
+                            className="text-[10px] font-black text-gray-500 dark:text-slate-400 uppercase tracking-[0.15em] bg-transparent outline-none cursor-pointer hover:text-gray-900 dark:hover:text-slate-200 transition-colors"
                             value={filterType}
                             onChange={(e) => setFilterType(e.target.value)}
                         >
-                            <option value="all">Filtro: Todo</option>
-                            <option value="error">Logs de Error</option>
-                            <option value="sale">Sólo Ventas</option>
-                            <option value="auto_rule">Bots / Automat.</option>
-                            <option value="entry">Ingresos Stock</option>
-                            <option value="manual">Ajustes Manuales</option>
+                            <option value="all" className="dark:bg-slate-900">Filtro: Todo</option>
+                            <option value="error" className="dark:bg-slate-900">Logs de Error</option>
+                            <option value="sale" className="dark:bg-slate-900">Sólo Ventas</option>
+                            <option value="auto_rule" className="dark:bg-slate-900">Bots / Automat.</option>
+                            <option value="entry" className="dark:bg-slate-900">Ingresos Stock</option>
+                            <option value="manual" className="dark:bg-slate-900">Ajustes Manuales</option>
                         </select>
                     </div>
-                    <button className="flex items-center gap-2 px-6 py-2 bg-gray-900 text-white rounded-xl text-sm font-black hover:bg-black transition-all shadow-xl shadow-gray-100 active:scale-95">
+                    <button className="flex items-center gap-2 px-6 py-2 bg-gray-900 dark:bg-slate-800 text-white dark:text-slate-200 rounded-xl text-sm font-black hover:bg-black dark:hover:bg-slate-700 transition-all shadow-xl shadow-gray-100 dark:shadow-black/20 active:scale-95">
                         <Download size={16} strokeWidth={2.5} /> <span>Exportar</span>
                     </button>
                 </div>
             </div>
 
             {/* Tabla de Auditoría - Contenedor con Alto Fijo y Scroll */}
-            <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden flex flex-col h-[calc(100vh-240px)] min-h-[500px] flex-1 mt-2">
+            <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden flex flex-col h-[calc(100vh-240px)] min-h-[500px] flex-1 mt-2">
                 <div className="overflow-auto custom-scrollbar flex-1 relative">
                     <table className="w-full text-left border-collapse">
-                        <thead className="bg-gray-50/80 backdrop-blur-md sticky top-0 z-10 border-b border-gray-200">
+                        <thead className="bg-gray-50/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-10 border-b border-gray-200 dark:border-slate-800">
                             <tr>
-                                <th className="px-6 py-5 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] bg-gray-50/50 whitespace-nowrap">Fecha Forense</th>
-                                <th className="px-6 py-5 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] text-center bg-gray-50/50">Fuente Auditada</th>
-                                <th className="px-6 py-5 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] bg-gray-50/50">Producto / SKU</th>
-                                <th className="px-6 py-5 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] bg-gray-50/50">Evento</th>
-                                <th className="px-6 py-5 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] bg-gray-50/50">Variación Stock</th>
-                                <th className="px-6 py-5 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] text-right bg-gray-50/50 pr-8">Detalle del Registro</th>
+                                <th className="px-6 py-5 text-[10px] font-black text-gray-400 dark:text-slate-500 uppercase tracking-[0.2em] bg-gray-50/50 dark:bg-slate-900/50 whitespace-nowrap">Fecha Forense</th>
+                                <th className="px-6 py-5 text-[10px] font-black text-gray-400 dark:text-slate-500 uppercase tracking-[0.2em] text-center bg-gray-50/50 dark:bg-slate-900/50">Fuente Auditada</th>
+                                <th className="px-6 py-5 text-[10px] font-black text-gray-400 dark:text-slate-500 uppercase tracking-[0.2em] bg-gray-50/50 dark:bg-slate-900/50">Producto / SKU</th>
+                                <th className="px-6 py-5 text-[10px] font-black text-gray-400 dark:text-slate-500 uppercase tracking-[0.2em] bg-gray-50/50 dark:bg-slate-900/50">Evento</th>
+                                <th className="px-6 py-5 text-[10px] font-black text-gray-400 dark:text-slate-500 uppercase tracking-[0.2em] bg-gray-50/50 dark:bg-slate-900/50">Variación Stock</th>
+                                <th className="px-6 py-5 text-[10px] font-black text-gray-400 dark:text-slate-500 uppercase tracking-[0.2em] text-right bg-gray-50/50 dark:bg-slate-900/50 pr-8">Detalle del Registro</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-100/80">
+                        <tbody className="divide-y divide-gray-100/80 dark:divide-slate-800/80">
                             {filteredLogs.map(log => (
-                                <tr key={log.id} className="hover:bg-blue-50/40 transition-colors group">
-                                    <td className="px-6 py-5 whitespace-nowrap text-[11px] font-mono font-black text-gray-500 tracking-tighter">
+                                <tr key={log.id} className="hover:bg-blue-50/40 dark:hover:bg-blue-900/10 transition-colors group">
+                                    <td className="px-6 py-5 whitespace-nowrap text-[11px] font-mono font-black text-gray-500 dark:text-slate-400 tracking-tighter">
                                         {log.date}
                                     </td>
                                     <td className="px-6 py-5">
                                         {renderActor(log)}
                                     </td>
                                     <td className="px-6 py-5">
-                                        <div className="text-sm font-black text-gray-950 line-clamp-1">{log.prod}</div>
-                                        <div className="text-[10px] font-mono font-black text-gray-400 tracking-wider flex items-center gap-1 mt-0.5 uppercase">
-                                            <span className="w-1.5 h-1.5 rounded-full bg-gray-200" />
+                                        <div className="text-sm font-black text-gray-950 dark:text-slate-100 line-clamp-1">{log.prod}</div>
+                                        <div className="text-[10px] font-mono font-black text-gray-400 dark:text-slate-500 tracking-wider flex items-center gap-1 mt-0.5 uppercase">
+                                            <span className="w-1.5 h-1.5 rounded-full bg-gray-200 dark:bg-slate-700" />
                                             {log.sku}
                                         </div>
                                     </td>
@@ -328,7 +329,7 @@ export const StockHistoryView: React.FC = () => {
                                     </td>
                                     <td className="px-6 py-5 text-right pr-8">
                                         <div
-                                            className={`text-[11px] font-bold italic transition-colors max-w-[280px] ml-auto truncate cursor-help ${log.type === 'error' ? 'text-red-500' : 'text-gray-400 opacity-80 group-hover:opacity-100'}`}
+                                            className={`text-[11px] font-bold italic transition-colors max-w-[280px] ml-auto truncate cursor-help ${log.type === 'error' ? 'text-red-500' : 'text-gray-400 dark:text-slate-500 opacity-80 group-hover:opacity-100'}`}
                                             title={log.reason}
                                         >
                                             {log.type === 'error' && <AlertCircle size={10} className="inline mr-1 animate-pulse" />}
@@ -342,15 +343,15 @@ export const StockHistoryView: React.FC = () => {
                 </div>
 
                 {filteredLogs.length === 0 && (
-                    <div className="p-24 text-center bg-gray-50/30 flex-1 flex flex-col items-center justify-center">
-                        <div className="w-24 h-24 bg-white rounded-[2.5rem] flex items-center justify-center mb-8 border border-gray-100 shadow-xl shadow-gray-200/50">
-                            <History size={48} className="text-gray-200 stroke-[1.5]" />
+                    <div className="p-24 text-center bg-gray-50/30 dark:bg-slate-900/30 flex-1 flex flex-col items-center justify-center">
+                        <div className="w-24 h-24 bg-white dark:bg-slate-900 rounded-[2.5rem] flex items-center justify-center mb-8 border border-gray-100 dark:border-slate-800 shadow-xl shadow-gray-200/50 dark:shadow-black/20">
+                            <History size={48} className="text-gray-200 dark:text-slate-700 stroke-[1.5]" />
                         </div>
-                        <p className="text-gray-900 font-black text-2xl mb-2 tracking-tight">Sin Evidencia Auditada</p>
-                        <p className="text-gray-400 text-sm mb-10 max-w-sm mx-auto font-medium">No se detectaron movimientos de stock para los criterios seleccionados. Intenta ampliar el rango de fechas.</p>
+                        <p className="text-gray-900 dark:text-slate-100 font-black text-2xl mb-2 tracking-tight">Sin Evidencia Auditada</p>
+                        <p className="text-gray-400 dark:text-slate-500 text-sm mb-10 max-w-sm mx-auto font-medium">No se detectaron movimientos de stock para los criterios seleccionados. Intenta ampliar el rango de fechas.</p>
                         <button
                             onClick={() => { setSearchTerm(''); setFilterType('all'); }}
-                            className="text-white text-[11px] font-black uppercase tracking-[0.2em] px-10 py-4 bg-blue-600 rounded-2xl transition-all shadow-2xl shadow-blue-100 hover:bg-blue-700 active:scale-95"
+                            className="text-white text-[11px] font-black uppercase tracking-[0.2em] px-10 py-4 bg-blue-600 rounded-2xl transition-all shadow-2xl shadow-blue-100 dark:shadow-blue-900/50 hover:bg-blue-700 active:scale-95"
                         >
                             Resetear Auditoría
                         </button>

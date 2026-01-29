@@ -1,22 +1,14 @@
 ---
+import Layout from "../../layouts/Layout.astro";
 import { MainLayout } from "../../layouts/MainLayout";
 import { DashboardView } from "../../components/inventario/Tablero";
 import { INITIAL_PRODUCTS } from "../../data/mocks";
-import "../../index.css";
 
 const currentPath = Astro.url.pathname;
 ---
 
-<html lang="es">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<title>Tablero Principal - ERP</title>
-	</head>
-	<body>
-		<MainLayout currentPath={currentPath} client:load>
-			<DashboardView products={INITIAL_PRODUCTS} client:load />
-		</MainLayout>
-	</body>
-</html>
+<Layout title="Tablero Principal - ERP">
+	<MainLayout currentPath={currentPath} client:load>
+		<DashboardView products={INITIAL_PRODUCTS} client:load />
+	</MainLayout>
+</Layout>

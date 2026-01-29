@@ -1,13 +1,13 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { MainLayout } from "../../layouts/MainLayout";
-import { ProductManager } from "../../components/deposito/ProductManager";
+import { InventoryList } from "../../components/deposito/InventoryList";
 
 const currentPath = Astro.url.pathname;
 ---
 
-<Layout title="Administración de Productos - ERP">
+<Layout title="Depósito - ERP">
     <MainLayout currentPath={currentPath} client:load>
-        <ProductManager client:load />
+        <InventoryList client:load />
     </MainLayout>
 </Layout>
