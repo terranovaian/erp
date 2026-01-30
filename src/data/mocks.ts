@@ -172,3 +172,70 @@ export const DEFAULT_COLUMN_CONFIG = [
     { key: 'location', label: 'Depósito', visible: true, sortable: false, align: 'center', className: 'hidden lg:table-cell' },
     { key: 'actions', label: 'Acciones', visible: true, sortable: false, align: 'center', width: 'w-20' },
 ];
+
+export const INITIAL_DEPOSITOS = [
+    {
+        id: 'DEPO-1',
+        nombre: 'DEPO 1 (SALA A)',
+        ciudad: 'Ibicuy',
+        provincia: 'Entre Ríos',
+        direccion: 'Calle Falsa 123',
+        divisiones: [
+            {
+                id: 'DIV-1',
+                nombre: 'DIV 1',
+                descripcion: 'Sección de Carga Pesada',
+                racks: [
+                    {
+                        id: 'RACK-A1',
+                        nombre: 'A1',
+                        descripcion: 'Rack Principal',
+                        pallets: [
+                            {
+                                id: 'PAL-001',
+                                nombre: 'Pallet #123',
+                                cajas: [
+                                    {
+                                        id: 'CAJA-101',
+                                        nombre: 'Caja A-101',
+                                        productos: [
+                                            { id: 'P1', nombre: 'Bolso Playero XL', sku: 'BOLS-001', cantidad: 10 },
+                                            { id: 'P2', nombre: 'Lona Estampada', sku: 'LONA-002', cantidad: 5 }
+                                        ]
+                                    }
+                                ],
+                                productosSueltos: [
+                                    { id: 'PS1', nombre: 'Gorra Visera Plana', sku: 'GOR-010', cantidad: 2 }
+                                ]
+                            }
+                        ],
+                        productosSueltos: []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        id: 'DEPO-2',
+        nombre: 'DEPO 2 (LOGÍSTICA)',
+        ciudad: 'CABA',
+        provincia: 'Buenos Aires',
+        direccion: 'Av. Corrientes 500',
+        divisiones: [
+            {
+                id: 'DIV-X',
+                nombre: 'Sector E-commerce',
+                racks: [
+                    {
+                        id: 'RACK-B1',
+                        nombre: 'B1',
+                        pallets: [],
+                        productosSueltos: [
+                            { id: 'P3', nombre: 'Botella Deportiva 1L', sku: 'BOT-DEP-05', cantidad: 50 }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+];
