@@ -1,32 +1,36 @@
 import React, { useState } from 'react';
-import { Search, Filter, CheckCircle2, AlertCircle, ChevronDown, Check, X, ShieldCheck, Zap, Globe, Fuel } from 'lucide-react';
+import { Search, ChevronDown, CheckCircle2, AlertCircle, X, ShieldCheck, Zap, Globe, Fuel, ExternalLink, Cloud, ShoppingCart, ShoppingBag, Truck, CreditCard, Mail } from 'lucide-react';
 
 const INITIAL_INTEGRATIONS = [
-    { id: 'mercadolibre', name: 'Mercado Libre', initials: 'ME', logo: 'https://http2.mlstatic.com/frontend-assets/ui-navigation/5.18.9/mercadolibre/logo__small.png', category: 'marketplace', status: 'disconnected', description: 'Sincroniza stock y precios automáticamente.' },
-    { id: 'tiendanube', name: 'Tienda Nube', initials: 'TI', logo: '', category: 'ecommerce', status: 'disconnected', description: 'Conecta tu tienda online para gestionar pedidos.' },
-    { id: 'fravega', name: 'Frávega', initials: 'FR', logo: '', category: 'marketplace', status: 'disconnected', description: 'Publica productos en el marketplace de Frávega.' },
-    { id: 'shell', name: 'Shell Box', initials: 'SH', logo: '', category: 'gas_station', status: 'connected', description: 'Gestión integrada de surtidores y ventas.' },
-    { id: 'ypf', name: 'YPF Full', initials: 'YP', logo: '', category: 'gas_station', status: 'disconnected', description: 'Control de inventario de tienda y combustible.' },
-    { id: 'axion', name: 'Axion Energy', initials: 'AX', logo: '', category: 'gas_station', status: 'disconnected', description: 'Integración de surtidores y fidelidad.' },
-    { id: 'shopify', name: 'Shopify', initials: 'SP', logo: '', category: 'ecommerce', status: 'connected', description: 'E-commerce global líder sincronizado.' },
+    { id: 'mercadolibre', name: 'Mercado Libre', category: 'Marketplace', status: 'disconnected', description: 'Sincroniza stock, precios y gestiona tus ventas de MeLi directamente.', logo: 'https://http2.mlstatic.com/frontend-assets/ui-navigation/5.18.9/mercadolibre/logo__small.png' },
+    { id: 'tiendanube', name: 'Tienda Nube', category: 'E-commerce', status: 'disconnected', description: 'Conecta tu tienda online líder en LATAM.', logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRz-Mh-pWk-7lq6-9x8z8-7-8' },
+    { id: 'fravega', name: 'Frávega Marketplace', category: 'Marketplace', status: 'disconnected', description: 'Publica y gestiona tus productos en uno de los retailers más grandes.', logo: 'https://www.fravega.com/favicon.ico' },
+    { id: 'shell', name: 'Shell Marketplace', category: 'Marketplace', status: 'disconnected', description: 'Integra tu catálogo con el ecosistema de beneficios Shell.', logo: 'https://www.shell.com.ar/etc.clientlibs/shell/clientlibs/clientlib-site/resources/resources/favicons/favicon-32x32.png' },
+    { id: 'falabella', name: 'Falabella', category: 'Marketplace', status: 'connected', description: 'Integra tu catálogo con el marketplace líder de Latinoamérica.', lastSync: 'Hace 5 min', logo: 'https://falabella.scene7.com/is/content/Falabella/favicon.ico' },
+    { id: 'amazon', name: 'Amazon', category: 'Marketplace', status: 'disconnected', description: 'Vende en Amazon globalmente. Gestión de FBA y FBM centralizada.', logo: 'https://www.amazon.com/favicon.ico' },
+    { id: 'shopify', name: 'Shopify', category: 'E-commerce', status: 'disconnected', description: 'La plataforma de comercio global.', logo: 'https://cdn.shopify.com/shopifycloud/brochure/assets/favicon-32x32-1ad49912c96c561584c264f33ae99b21f35bc900f074744d2d473489fe4c1537.png' },
+    { id: 'correoar', name: 'Correo Argentino', category: 'Logística', status: 'disconnected', description: 'Generación de etiquetas de envío y tracking automático.', logo: 'https://www.correoargentino.com.ar/sites/default/files/favicon.ico' },
+    { id: 'andreani', name: 'Andreani', category: 'Logística', status: 'disconnected', description: 'Gestión logística integral para tus envíos.', logo: 'https://www.andreani.com/favicon.ico' },
+    { id: 'oca', name: 'OCA', category: 'Logística', status: 'disconnected', description: 'Envíos de paquetería con cobertura nacional.', logo: 'https://www.oca.com.ar/favicon.ico' },
+    { id: 'nexoflex', name: 'NexoFlex', category: 'Logística', status: 'disconnected', description: 'Logística inteligente con entrega en el día.', logo: 'https://nexoflex.com.ar/favicon.ico' },
+    { id: 'moova', name: 'Moova', category: 'Logística', status: 'disconnected', description: 'Tecnología de última milla para envíos rápidos.', logo: 'https://moova.io/favicon.ico' },
 ];
 
 export const IntegrationsView = () => {
     const [integrations, setIntegrations] = useState(INITIAL_INTEGRATIONS);
     const [searchTerm, setSearchTerm] = useState('');
-    const [activeFilter, setActiveFilter] = useState('all');
+    const [activeFilter, setActiveFilter] = useState('Todas');
     const [selectedIntegration, setSelectedIntegration] = useState<any>(null);
 
-    // Filter logic
     const filteredIntegrations = integrations.filter(i => {
         const matchesSearch = i.name.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesCategory = activeFilter === 'all' || i.category === activeFilter;
+        const matchesCategory = activeFilter === 'Todas' || i.category === activeFilter;
         return matchesSearch && matchesCategory;
     });
 
     const handleConnect = (e: React.FormEvent) => {
         e.preventDefault();
-        setIntegrations(prev => prev.map(i => i.id === selectedIntegration.id ? { ...i, status: 'connected' } : i));
+        setIntegrations(prev => prev.map(i => i.id === selectedIntegration.id ? { ...i, status: 'connected', lastSync: 'Recién' } : i));
         setSelectedIntegration(null);
     };
 
@@ -35,114 +39,111 @@ export const IntegrationsView = () => {
         setSelectedIntegration(null);
     };
 
-    const getCategoryIcon = (category: string) => {
-        switch (category) {
-            case 'marketplace': return <Globe size={18} />;
-            case 'ecommerce': return <Zap size={18} />;
-            case 'gas_station': return <Fuel size={18} />;
-            default: return <Filter size={18} />;
-        }
-    };
-
-    const categories = [
-        { id: 'all', label: 'Todos' },
-        { id: 'marketplace', label: 'Marketplaces' },
-        { id: 'ecommerce', label: 'Ecommerce' },
-        { id: 'gas_station', label: 'Estaciones' },
-    ];
+    const categories = ['Todas', 'Marketplace', 'E-commerce', 'Logística'];
 
     return (
-        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-12">
-            {/* Header Section */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-                <div className="space-y-1">
-                    <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Centro de Integraciones</h1>
-                    <p className="text-gray-500 font-medium">Conecta tu negocio con los principales servicios del mercado.</p>
-                </div>
-
-                <div className="flex items-center gap-3 bg-white p-1.5 rounded-2xl border border-gray-200 shadow-sm">
-                    {categories.map(cat => (
-                        <button
-                            key={cat.id}
-                            onClick={() => setActiveFilter(cat.id)}
-                            className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${activeFilter === cat.id
-                                ? 'bg-blue-600 text-white shadow-lg shadow-blue-100'
-                                : 'text-gray-500 hover:bg-gray-50'
-                                }`}
-                        >
-                            {cat.label}
-                        </button>
-                    ))}
-                </div>
+        <div className="space-y-6 animate-fade-in pb-12">
+            {/* Tag Header */}
+            <div className="flex">
+                <span className="px-4 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider text-orange-600 border border-orange-200 bg-orange-50">
+                    Integraciones
+                </span>
             </div>
 
-            {/* Search and Metadata Bar */}
-            <div className="flex flex-col sm:flex-row items-center gap-4">
-                <div className="relative flex-1 group w-full">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-500 transition-colors" size={20} />
-                    <input
-                        type="text"
-                        placeholder="Buscar integración por nombre..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-2xl shadow-sm focus:ring-4 focus:ring-blue-50/50 focus:border-blue-500 outline-none transition-all font-medium"
-                    />
+            {/* Title & Filters */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div>
+                    <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">Conecta tus Canales</h1>
+                    <p className="text-slate-500 dark:text-slate-400 mt-2 text-lg">Centraliza la operación de tu negocio en un solo lugar.</p>
                 </div>
-                <div className="bg-blue-50 px-6 py-4 rounded-2xl border border-blue-100 flex items-center gap-3 whitespace-nowrap">
-                    <div className="flex flex-col">
-                        <span className="text-xs font-bold text-blue-600 uppercase tracking-widest">Activas</span>
-                        <span className="text-xl font-black text-blue-900 leading-none">
-                            {integrations.filter(i => i.status === 'connected').length} Integraciones
-                        </span>
+
+                <div className="flex items-center gap-3">
+                    <div className="relative group flex-1 md:w-64">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                        <input
+                            type="text"
+                            placeholder="Buscar..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="w-full pl-10 pr-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none transition-all"
+                        />
+                    </div>
+                    <div className="relative">
+                        <select
+                            value={activeFilter}
+                            onChange={(e) => setActiveFilter(e.target.value)}
+                            className="appearance-none pl-4 pr-10 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-medium focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none transition-all cursor-pointer"
+                        >
+                            {categories.map(c => <option key={c} value={c}>{c}</option>)}
+                        </select>
+                        <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={16} />
                     </div>
                 </div>
             </div>
 
-            {/* Integrations Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
                 {filteredIntegrations.map(integration => (
                     <div
                         key={integration.id}
-                        onClick={() => setSelectedIntegration(integration)}
-                        className="group bg-white rounded-3xl border border-gray-200 p-6 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-50 transition-all cursor-pointer relative overflow-hidden"
+                        className="group bg-white dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 p-6 hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-none transition-all relative flex flex-col justify-between h-full"
                     >
-                        {/* Status Badge */}
-                        <div className="absolute top-6 right-6 flex items-center gap-1.5">
-                            <span className={`w-2 h-2 rounded-full ${integration.status === 'connected' ? 'bg-green-500 animate-pulse' : 'bg-gray-300'}`}></span>
-                            <span className={`text-[10px] font-black uppercase tracking-widest ${integration.status === 'connected' ? 'text-green-600' : 'text-gray-400'}`}>
-                                {integration.status === 'connected' ? 'Conectado' : 'Desconectado'}
-                            </span>
-                        </div>
-
-                        <div className="flex items-start gap-4 mb-6">
-                            <div className={`w-14 h-14 rounded-2xl flex items-center justify-center font-black text-xl shadow-sm border ${integration.status === 'connected' ? 'bg-blue-50 border-blue-100 text-blue-600' : 'bg-gray-50 border-gray-100 text-gray-400'
-                                }`}>
+                        {/* Header Status */}
+                        <div className="flex justify-between items-start mb-6">
+                            <div className="w-12 h-12 flex items-center justify-center p-1">
                                 {integration.logo ? (
-                                    <img src={integration.logo} alt={integration.name} className="w-10 object-contain" />
+                                    <img
+                                        src={integration.logo}
+                                        alt={integration.name}
+                                        className="w-full h-full object-contain filter grayscale group-hover:grayscale-0 transition-all"
+                                        onError={(e) => {
+                                            (e.target as HTMLImageElement).src = 'https://via.placeholder.com/48?text=' + integration.name.charAt(0);
+                                        }}
+                                    />
                                 ) : (
-                                    integration.initials
+                                    <div className="w-10 h-10 bg-slate-100 dark:bg-slate-800 rounded-lg flex items-center justify-center font-bold text-slate-400">
+                                        {integration.name.charAt(0)}
+                                    </div>
                                 )}
                             </div>
-                            <div className="flex-1 mt-1">
-                                <h3 className="font-bold text-gray-900 text-lg group-hover:text-blue-600 transition-colors tracking-tight">{integration.name}</h3>
-                                <div className="flex items-center gap-1 text-gray-400 font-bold text-[10px] uppercase tracking-wider">
-                                    {getCategoryIcon(integration.category)}
-                                    {integration.category.replace('_', ' ')}
+
+                            <div className="flex flex-col items-end">
+                                <div className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border flex items-center gap-1.5 ${integration.status === 'connected'
+                                        ? 'bg-green-50 text-green-600 border-green-100'
+                                        : 'bg-slate-50 text-slate-400 border-slate-100 dark:bg-slate-800 dark:border-slate-700'
+                                    }`}>
+                                    {integration.status === 'connected' ? (
+                                        <>
+                                            <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                                            Conectado
+                                        </>
+                                    ) : 'Desconectado'}
                                 </div>
+                                {integration.status === 'connected' && integration.lastSync && (
+                                    <span className="text-[10px] text-slate-400 mt-1 font-medium italic">
+                                        Sinc. {integration.lastSync}
+                                    </span>
+                                )}
                             </div>
                         </div>
 
-                        <p className="text-gray-500 text-sm leading-relaxed mb-6 line-clamp-2">
-                            {integration.description}
-                        </p>
+                        {/* Content */}
+                        <div className="mb-8">
+                            <h3 className="font-bold text-slate-900 dark:text-white text-lg mb-2">{integration.name}</h3>
+                            <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed min-h-[40px]">
+                                {integration.description}
+                            </p>
+                        </div>
 
-                        <div className="pt-4 border-t border-gray-50 flex items-center justify-between">
-                            <div className="flex items-center gap-2 text-xs font-bold text-gray-400">
-                                <ShieldCheck size={14} className="text-blue-500" />
-                                API Certificada
-                            </div>
-                            <button className={`px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${integration.status === 'connected' ? 'bg-gray-50 text-gray-600 group-hover:bg-blue-50 group-hover:text-blue-600' : 'bg-blue-600 text-white group-hover:shadow-lg group-hover:shadow-blue-100'
-                                }`}>
+                        {/* Action */}
+                        <div className="flex justify-end pt-4 border-t border-slate-50 dark:border-slate-800">
+                            <button
+                                onClick={() => setSelectedIntegration(integration)}
+                                className={`px-6 py-2 rounded-lg text-sm font-bold transition-all ${integration.status === 'connected'
+                                        ? 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300'
+                                        : 'bg-[#f06428] text-white hover:bg-[#d8531e] hover:shadow-lg hover:shadow-orange-200 dark:hover:shadow-none'
+                                    }`}
+                            >
                                 {integration.status === 'connected' ? 'Configurar' : 'Conectar'}
                             </button>
                         </div>
@@ -152,119 +153,60 @@ export const IntegrationsView = () => {
 
             {/* Modal de Conexión */}
             {selectedIntegration && (
-                <div className="fixed inset-0 bg-gray-900/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4 animate-in fade-in duration-300">
-                    <div className="bg-white rounded-[32px] w-full max-w-lg shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300">
-                        {/* Modal Header */}
-                        <div className="p-8 pb-4 flex items-start justify-between">
+                <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4 animate-fade-in">
+                    <div className="bg-white dark:bg-slate-900 rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden animate-zoom-in">
+                        <div className="p-8 border-b border-slate-100 dark:border-slate-800 flex items-start justify-between">
                             <div className="flex items-center gap-4">
-                                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center font-black text-2xl border ${selectedIntegration.status === 'connected' ? 'bg-blue-50 border-blue-100 text-blue-600' : 'bg-gray-50 border-gray-100 text-gray-400'
-                                    }`}>
-                                    {selectedIntegration.logo ? (
-                                        <img src={selectedIntegration.logo} alt={selectedIntegration.name} className="w-12 object-contain" />
-                                    ) : (
-                                        selectedIntegration.initials
-                                    )}
+                                <div className="w-16 h-16 rounded-2xl bg-white p-2 border border-slate-100 flex items-center justify-center">
+                                    <img src={selectedIntegration.logo} alt="" className="object-contain" />
                                 </div>
                                 <div>
-                                    <h2 className="text-2xl font-black text-gray-900 tracking-tight">{selectedIntegration.name}</h2>
-                                    <p className="text-gray-500 font-medium">Configuración de comunicación API</p>
+                                    <h2 className="text-2xl font-black text-slate-900 dark:text-white">{selectedIntegration.name}</h2>
+                                    <p className="text-slate-500 text-sm">{selectedIntegration.status === 'connected' ? 'Configurar conexión actual' : 'Conecta tu cuenta'}</p>
                                 </div>
                             </div>
-                            <button
-                                onClick={() => setSelectedIntegration(null)}
-                                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-                            >
-                                <X size={24} className="text-gray-400" />
+                            <button onClick={() => setSelectedIntegration(null)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full">
+                                <X size={24} className="text-slate-400" />
                             </button>
                         </div>
 
-                        {/* Modal Content */}
-                        <div className="p-8 pt-4">
+                        <div className="p-8">
                             {selectedIntegration.status === 'disconnected' ? (
                                 <form onSubmit={handleConnect} className="space-y-6">
-                                    <div className="space-y-4">
+                                    <div className="space-y-4 text-left">
                                         <div>
-                                            <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">Client ID</label>
-                                            <input
-                                                type="text"
-                                                required
-                                                placeholder="Ej: ML_82371923"
-                                                className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition-all font-mono text-sm"
-                                            />
+                                            <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">Client ID</label>
+                                            <input required type="text" className="w-full px-5 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none transition-all font-mono" />
                                         </div>
                                         <div>
-                                            <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">Client Secret</label>
-                                            <input
-                                                type="password"
-                                                required
-                                                placeholder="••••••••••••••••"
-                                                className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition-all font-mono text-sm"
-                                            />
+                                            <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">Secret Key</label>
+                                            <input required type="password" placeholder="••••••••••••" className="w-full px-5 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none transition-all font-mono" />
                                         </div>
                                     </div>
-
-                                    <div className="bg-amber-50 p-4 rounded-2xl border border-amber-100 flex gap-3 text-amber-800">
-                                        <AlertCircle size={20} className="flex-shrink-0" />
-                                        <p className="text-xs font-medium leading-relaxed">
-                                            Al conectar, autorizas a <strong>MiSistema ERP</strong> a leer y modificar datos en tu cuenta de {selectedIntegration.name}.
+                                    <div className="bg-[#f06428]/5 p-4 rounded-xl border border-orange-100 flex gap-3">
+                                        <ShieldCheck size={20} className="text-[#f06428]" />
+                                        <p className="text-xs text-[#f06428] font-medium leading-relaxed text-left">
+                                            Tus datos de acceso están encriptados y protegidos según normativas de seguridad bancaria.
                                         </p>
                                     </div>
-
-                                    <div className="flex gap-4 pt-2">
-                                        <button
-                                            type="button"
-                                            onClick={() => setSelectedIntegration(null)}
-                                            className="flex-1 py-4 bg-white border border-gray-200 rounded-2xl font-bold text-gray-500 hover:bg-gray-50 transition-all"
-                                        >
-                                            Cancelar
-                                        </button>
-                                        <button
-                                            type="submit"
-                                            className="flex-1 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl shadow-blue-200 transition-all active:scale-95"
-                                        >
-                                            Conectar Ahora
-                                        </button>
-                                    </div>
+                                    <button type="submit" className="w-full py-4 bg-[#f06428] text-white rounded-xl font-bold uppercase tracking-widest hover:bg-[#d8531e] transition-all">
+                                        Confirmar Conexión
+                                    </button>
                                 </form>
                             ) : (
-                                <div className="space-y-8">
-                                    <div className="bg-green-50 p-6 rounded-3xl border border-green-100 flex items-center justify-between">
-                                        <div className="flex items-center gap-4">
-                                            <div className="w-12 h-12 bg-white rounded-2xl border border-green-200 flex items-center justify-center text-green-600">
-                                                <CheckCircle2 size={28} />
-                                            </div>
-                                            <div>
-                                                <p className="text-green-800 font-black text-sm uppercase tracking-wider leading-none">Conexión Activa</p>
-                                                <p className="text-green-600 text-xs font-medium">Sincronizado hace 2 minutos</p>
+                                <div className="space-y-6">
+                                    <div className="bg-green-50 p-6 rounded-2xl border border-green-100 flex items-center justify-between">
+                                        <div className="flex items-center gap-3">
+                                            <CheckCircle2 className="text-green-600" size={32} />
+                                            <div className="text-left">
+                                                <p className="text-green-800 font-bold uppercase text-xs tracking-wider">Servicio Activo</p>
+                                                <p className="text-green-600 text-[10px] font-medium mt-0.5">Sincronización en tiempo real habilitada</p>
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div className="space-y-4">
-                                        <div className="flex items-center justify-between py-3 border-b border-gray-50">
-                                            <span className="text-sm font-bold text-gray-500">ID de Conexión</span>
-                                            <span className="text-sm font-mono text-gray-900">CON_X902_ALPHA</span>
-                                        </div>
-                                        <div className="flex items-center justify-between py-3 border-b border-gray-50">
-                                            <span className="text-sm font-bold text-gray-500">Último Evento</span>
-                                            <span className="text-sm font-medium text-gray-900 italic font-mono">STOCK_SYNC_SUCCESS</span>
-                                        </div>
-                                    </div>
-
-                                    <div className="flex flex-col gap-3 pt-2">
-                                        <button
-                                            onClick={() => setSelectedIntegration(null)}
-                                            className="w-full py-4 bg-gray-900 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-black transition-all shadow-lg shadow-gray-200"
-                                        >
-                                            Guardar Cambios
-                                        </button>
-                                        <button
-                                            onClick={handleDisconnect}
-                                            className="w-full py-4 bg-white border border-red-200 text-red-600 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-red-50 transition-all flex items-center justify-center gap-2"
-                                        >
-                                            <AlertCircle size={18} />
-                                            Desconectar Cuenta
-                                        </button>
+                                    <div className="space-y-3">
+                                        <button className="w-full py-3 bg-slate-900 text-white rounded-xl font-bold text-sm tracking-wide">Pausar Sincronización</button>
+                                        <button onClick={handleDisconnect} className="w-full py-3 bg-white border border-red-200 text-red-600 rounded-xl font-bold text-sm hover:bg-red-50 transition-all">Desvincular Canal</button>
                                     </div>
                                 </div>
                             )}
