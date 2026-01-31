@@ -10,7 +10,7 @@ const DUMMY_MOVEMENTS = [
 
 export const StockMovements: React.FC = () => {
     return (
-        <div className="p-6 bg-slate-50 dark:bg-slate-950 min-h-screen">
+        <div className="p-6 bg-white dark:bg-slate-950 min-h-screen">
             <div className="max-w-4xl mx-auto">
                 <header className="mb-10">
                     <h1 className="text-3xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight leading-none">Movimientos de Stock</h1>

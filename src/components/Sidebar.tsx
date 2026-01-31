@@ -82,7 +82,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen, c
                     } ${sidebarOpen ? 'px-3 py-2 gap-3' : 'justify-center py-2 px-0'} 
                     ${isSubItem && sidebarOpen ? 'pl-10' : ''}`}
             >
-                <Icon size={isSubItem ? 16 : 20} className={isExactActive(href) ? iconActiveColor : 'text-gray-400'} />
+                <Icon size={isSubItem ? 16 : 20} className={isExactActive(href) ? iconActiveColor : 'text-gray-400 dark:text-slate-500'} />
                 {sidebarOpen && <span className="whitespace-nowrap overflow-hidden text-ellipsis">{label}</span>}
             </a>
         );
@@ -114,7 +114,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen, c
                     <a href="/ventas"
                         title={!sidebarOpen ? 'Ventas' : ''}
                         className={`w-full flex items-center rounded-lg transition-all ${isActive('/ventas') ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400' : 'text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-800'} ${sidebarOpen ? 'px-3 py-2 gap-3' : 'justify-center py-2 px-0'}`}>
-                        <ShoppingCart size={20} className={isActive('/ventas') ? 'text-blue-600' : 'text-gray-400'} />
+                        <ShoppingCart size={20} className={isActive('/ventas') ? 'text-blue-600' : 'text-gray-400 dark:text-slate-500'} />
                         {sidebarOpen && <span className="text-sm">Ventas</span>}
                     </a>
                 </div>
@@ -127,7 +127,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen, c
                         className={`w-full flex items-center justify-between rounded-lg transition-all ${isActive('/deposito') ? 'text-blue-700 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/10' : 'text-gray-700 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-800'} ${sidebarOpen ? 'px-3 py-2' : 'justify-center py-2 px-0'}`}
                     >
                         <div className="flex items-center gap-3">
-                            <Warehouse size={20} className={isActive('/deposito') ? 'text-blue-600' : 'text-orange-600'} />
+                            <Warehouse size={20} className={isActive('/deposito') ? 'text-blue-600' : 'text-orange-600 dark:text-orange-500'} />
                             {sidebarOpen && <span className="text-sm font-medium">Gestión de Depósito</span>}
                         </div>
                         {sidebarOpen && (depositoExpanded ? <ChevronDown size={16} /> : <ChevronRight size={16} />)}
@@ -151,7 +151,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen, c
                         className={`w-full flex items-center justify-between rounded-lg transition-all ${isActive('/inventario') ? 'text-blue-700 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/10' : 'text-gray-700 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-800'} ${sidebarOpen ? 'px-3 py-2' : 'justify-center py-2 px-0'}`}
                     >
                         <div className="flex items-center gap-3">
-                            <Box size={20} className={isActive('/inventario') ? 'text-blue-600' : 'text-blue-600'} />
+                            <Box size={20} className={isActive('/inventario') ? 'text-blue-600' : 'text-blue-600 dark:text-blue-500'} />
                             {sidebarOpen && <span className="text-sm font-medium">Inventario</span>}
                         </div>
                         {sidebarOpen && (inventoryExpanded ? <ChevronDown size={16} /> : <ChevronRight size={16} />)}
@@ -174,7 +174,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen, c
                     <a href="/integraciones"
                         title={!sidebarOpen ? 'Integraciones' : ''}
                         className={`w-full flex items-center rounded-lg transition-all ${isActive('/integraciones') ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400' : 'text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-800'} ${sidebarOpen ? 'px-3 py-2 gap-3' : 'justify-center py-2 px-0'}`}>
-                        <Plug size={20} className={isActive('/integraciones') ? 'text-blue-600' : 'text-gray-400'} />
+                        <Plug size={20} className={isActive('/integraciones') ? 'text-blue-600' : 'text-gray-400 dark:text-slate-500'} />
                         {sidebarOpen && <span className="text-sm">Integraciones</span>}
                     </a>
                 </div>
@@ -187,7 +187,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen, c
                         className={`w-full flex items-center justify-between rounded-lg transition-all ${isActive('/herramientas') ? 'text-blue-700 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/10' : 'text-gray-700 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-800'} ${sidebarOpen ? 'px-3 py-2' : 'justify-center py-2 px-0'}`}
                     >
                         <div className="flex items-center gap-3">
-                            <Wrench size={20} className={isActive('/herramientas') ? 'text-blue-600' : 'text-purple-600'} />
+                            <Wrench size={20} className={isActive('/herramientas') ? 'text-blue-600' : 'text-purple-600 dark:text-purple-500'} />
                             {sidebarOpen && <span className="text-sm font-medium">Herramientas</span>}
                         </div>
                         {sidebarOpen && (herramientasExpanded ? <ChevronDown size={16} /> : <ChevronRight size={16} />)}
