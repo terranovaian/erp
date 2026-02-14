@@ -8,14 +8,21 @@ interface ModalProps {
     title: string;
     children: React.ReactNode;
     footer?: React.ReactNode;
+    size?: 'sm' | 'md' | 'lg' | 'xl';
 }
 
-const BaseModal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, footer }) => {
+const BaseModal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, footer, size = 'md' }) => {
     if (!isOpen) return null;
+
+    const maxWidthClass =
+        size === 'sm' ? 'max-w-sm'
+            : size === 'lg' ? 'max-w-2xl'
+                : size === 'xl' ? 'max-w-4xl'
+                    : 'max-w-md';
 
     return (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in duration-200">
-            <div className="bg-[#121212] border border-white/10 w-full max-w-md rounded-2xl shadow-2xl animate-in zoom-in-95 duration-200 overflow-hidden">
+            <div className={`bg-[#121212] border border-white/10 w-full ${maxWidthClass} rounded-2xl shadow-2xl animate-in zoom-in-95 duration-200 overflow-hidden`}>
                 <div className="flex items-center justify-between p-5 border-b border-white/5">
                     <h3 className="text-lg font-bold text-white tracking-tight">{title}</h3>
                     <button onClick={onClose} className="text-gray-400 hover:text-white transition-colors">
@@ -422,6 +429,7 @@ export const PalletContentModal: React.FC<{
             isOpen={isOpen}
             onClose={onClose}
             title={`Contenido del Pallet: ${pallet.nombre}`}
+            size="xl"
             footer={
                 <div className="flex w-full justify-between">
                     <button onClick={onDelete} className="px-4 py-2 rounded-lg text-sm font-bold text-white bg-red-600 hover:bg-red-500 transition-colors shadow-lg shadow-red-900/20">
@@ -433,16 +441,16 @@ export const PalletContentModal: React.FC<{
                 </div>
             }
         >
-            <div className="space-y-8">
+            <div className="space-y-10">
                 {/* Cajas section */}
                 <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Cajas en Pallet</label>
+                        <label className="text-xs font-black text-gray-500 uppercase tracking-[0.2em]">Cajas en Pallet</label>
                         <button
                             onClick={onAddBox}
-                            className="flex items-center gap-2 px-4 py-2 border border-[#f06428]/40 text-[#f06428] rounded-xl text-[10px] font-black uppercase hover:bg-[#f06428]/5 transition-all"
+                            className="flex items-center gap-2 px-5 py-2.5 border border-[#f06428]/40 text-[#f06428] rounded-xl text-xs font-black uppercase hover:bg-[#f06428]/5 transition-all"
                         >
-                            <Plus size={12} /> Agregar Caja
+                            <Plus size={14} /> Agregar Caja
                         </button>
                     </div>
 
@@ -455,18 +463,18 @@ export const PalletContentModal: React.FC<{
                             pallet.cajas.map((caja: any) => (
                                 <div
                                     key={caja.id}
-                                    className="bg-[#1a1a1a] border border-white/5 p-4 rounded-xl flex items-center justify-between group hover:border-orange-500/30 transition-all"
+                                    className="bg-[#1a1a1a] border border-white/5 p-5 rounded-xl flex items-center justify-between group hover:border-orange-500/30 transition-all"
                                 >
                                     <div 
                                         className="flex items-center gap-3 cursor-pointer flex-1"
                                         onClick={() => onSelectBox(caja.id)}
                                     >
                                         <div className="text-orange-500">
-                                            <Box size={18} />
+                                            <Box size={20} />
                                         </div>
                                         <div className="text-left">
-                                            <p className="font-black text-sm text-white uppercase tracking-tighter">{caja.nombre}</p>
-                                            <p className="text-[10px] font-bold text-gray-500 lowercase">{caja.productos.length} productos</p>
+                                            <p className="font-black text-base text-white uppercase tracking-tighter">{caja.nombre}</p>
+                                            <p className="text-xs font-bold text-gray-500 lowercase">{caja.productos.length} productos</p>
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-2">
@@ -483,7 +491,7 @@ export const PalletContentModal: React.FC<{
                                             <Trash2 size={16} />
                                         </button>
                                         <div onClick={() => onSelectBox(caja.id)} className="cursor-pointer">
-                                            <ArrowRight size={14} className="text-gray-700 group-hover:text-orange-500 transition-colors" />
+                                            <ArrowRight size={18} className="text-gray-700 group-hover:text-orange-500 transition-colors" />
                                         </div>
                                     </div>
                                 </div>
@@ -494,28 +502,28 @@ export const PalletContentModal: React.FC<{
 
                 {/* Productos Sueltos section */}
                 <div className="space-y-4">
-                    <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] block">Productos Sueltos</label>
+                    <label className="text-xs font-black text-gray-500 uppercase tracking-[0.2em] block">Productos Sueltos</label>
                     <div className="space-y-2">
                         {(!pallet.productosSueltos || pallet.productosSueltos.length === 0) ? (
                             <div className="border border-dashed border-white/10 rounded-2xl p-8 flex flex-col items-center justify-center gap-4 text-center">
                                 <div className="text-gray-700">
-                                    <Package size={32} />
+                                    <Package size={34} />
                                 </div>
                                 <p className="text-gray-500 text-xs font-medium">Pallet vacío de productos sueltos</p>
                             </div>
                         ) : (
                             pallet.productosSueltos.map((prod: any) => (
-                                <div key={prod.id} className="bg-[#1a1a1a] border border-white/5 p-4 rounded-xl flex items-center justify-between">
+                                <div key={prod.id} className="bg-[#1a1a1a] border border-white/5 p-5 rounded-xl flex items-center justify-between">
                                     <div className="flex items-center gap-3">
                                         <div className="w-10 h-10 bg-orange-500/10 text-orange-500 rounded-lg flex items-center justify-center">
-                                            <Package size={18} />
+                                            <Package size={20} />
                                         </div>
                                         <div className="text-left">
-                                            <p className="font-black text-sm text-white uppercase tracking-tighter">{prod.nombre}</p>
-                                            <p className="text-[10px] font-bold text-gray-500 uppercase">SKU: {prod.sku}</p>
+                                            <p className="font-black text-base text-white uppercase tracking-tighter">{prod.nombre}</p>
+                                            <p className="text-xs font-bold text-gray-500 uppercase">SKU: {prod.sku}</p>
                                         </div>
                                     </div>
-                                    <div className="bg-orange-600/20 text-orange-500 px-3 py-1 rounded-full text-[10px] font-black">
+                                    <div className="bg-orange-600/20 text-orange-500 px-3 py-1 rounded-full text-xs font-black">
                                         x{prod.cantidad}
                                     </div>
                                 </div>
@@ -527,7 +535,7 @@ export const PalletContentModal: React.FC<{
                 <div className="pt-4 border-t border-white/5">
                     <button
                         onClick={onAddProduct}
-                        className="w-full py-3 bg-[#f06428] text-white rounded-xl font-black text-xs uppercase tracking-[0.1em] hover:bg-[#d8531e] transition-all flex items-center justify-center gap-2"
+                        className="w-full py-3.5 bg-[#f06428] text-white rounded-xl font-black text-sm uppercase tracking-[0.1em] hover:bg-[#d8531e] transition-all flex items-center justify-center gap-2"
                     >
                         <Plus size={16} /> Agregar Producto Suelto
                     </button>
@@ -552,6 +560,7 @@ export const BoxContentModal: React.FC<{
             isOpen={isOpen}
             onClose={onClose}
             title={`Contenido de la Caja: ${box.nombre}`}
+            size="lg"
             footer={
                 <div className="flex w-full justify-between">
                     <button onClick={onDelete} className="px-4 py-2 rounded-lg text-sm font-bold text-white bg-red-600 hover:bg-red-500 transition-colors shadow-lg shadow-red-900/20">
@@ -565,7 +574,7 @@ export const BoxContentModal: React.FC<{
         >
             <div className="space-y-6">
                 <div>
-                    <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mb-4 block">Productos en Caja</label>
+                    <label className="text-xs font-black text-gray-500 uppercase tracking-[0.2em] mb-4 block">Productos en Caja</label>
                     <div className="space-y-2">
                         {(!box.productos || box.productos.length === 0) ? (
                             <div className="bg-black/20 border border-white/5 rounded-2xl p-8 text-center italic text-gray-600 text-xs">
@@ -573,17 +582,17 @@ export const BoxContentModal: React.FC<{
                             </div>
                         ) : (
                             box.productos.map((prod: any) => (
-                                <div key={prod.id} className="bg-[#1a1a1a] border border-white/5 p-4 rounded-xl flex items-center justify-between">
+                                <div key={prod.id} className="bg-[#1a1a1a] border border-white/5 p-5 rounded-xl flex items-center justify-between">
                                     <div className="flex items-center gap-3">
                                         <div className="w-10 h-10 bg-orange-500/10 text-orange-500 rounded-lg flex items-center justify-center">
-                                            <Package size={18} />
+                                            <Package size={20} />
                                         </div>
                                         <div className="text-left">
-                                            <p className="font-black text-sm text-white uppercase tracking-tighter">{prod.nombre}</p>
-                                            <p className="text-[10px] font-bold text-gray-500 uppercase">SKU: {prod.sku}</p>
+                                            <p className="font-black text-base text-white uppercase tracking-tighter">{prod.nombre}</p>
+                                            <p className="text-xs font-bold text-gray-500 uppercase">SKU: {prod.sku}</p>
                                         </div>
                                     </div>
-                                    <div className="bg-orange-600/20 text-orange-500 px-3 py-1 rounded-full text-[10px] font-black">
+                                    <div className="bg-orange-600/20 text-orange-500 px-3 py-1 rounded-full text-xs font-black">
                                         x{prod.cantidad}
                                     </div>
                                 </div>
@@ -595,7 +604,7 @@ export const BoxContentModal: React.FC<{
                 <div className="pt-4 border-t border-white/5">
                     <button
                         onClick={onAddProduct}
-                        className="w-full py-3 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-xl font-black text-xs uppercase tracking-[0.1em] transition-all flex items-center justify-center gap-2"
+                        className="w-full py-3.5 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-xl font-black text-sm uppercase tracking-[0.1em] transition-all flex items-center justify-center gap-2"
                     >
                         <Plus size={16} /> Añadir Producto a Caja
                     </button>

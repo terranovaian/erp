@@ -603,12 +603,9 @@ const ProductModal = ({ product, onClose, onUpdate, categories, onAddCategory })
         }
     };
 
-    const readClass = "bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-gray-900 text-sm font-medium
-    w - full focus: ring - 0 block transition - colors";
-    const editClass = "bg-white border border-blue-400 rounded-lg px-3 py-2 text-gray-900 text-sm font-medium
-    w - full focus: ring - 2 focus: ring - blue - 500 focus: border - blue - 500 shadow - sm block transition - all";
-    const textAreaReadClass = "bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-gray-900 text-sm
-    font - medium w - full resize - none focus: ring - 0 leading - relaxed block";
+    const readClass = "bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-gray-900 text-sm font-medium w-full focus:ring-0 block transition-colors";
+    const editClass = "bg-white border border-blue-400 rounded-lg px-3 py-2 text-gray-900 text-sm font-medium w-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm block transition-all";
+    const textAreaReadClass = "bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-gray-900 text-sm font-medium w-full resize-none focus:ring-0 leading-relaxed block";
 
     const getInputClass = () => isEditing ? editClass : readClass;
 
@@ -622,8 +619,7 @@ const ProductModal = ({ product, onClose, onUpdate, categories, onAddCategory })
                     className="px-8 py-5 border-b border-gray-200 bg-white flex justify-between items-center sticky top-0 z-10">
                     <div className="flex items-center gap-4">
                         <div>
-                            <h3 className="text-2xl font-bold text-gray-900 leading-tight">{isEditing ? 'Editar
-                                    Producto' : formData.name}</h3>
+                            <h3 className="text-2xl font-bold text-gray-900 leading-tight">{isEditing ? 'Editar Producto' : formData.name}</h3>
                             {!isEditing && <span className="text-sm text-gray-500 font-mono">ID:
                                 {product.id}</span>}
                         </div>

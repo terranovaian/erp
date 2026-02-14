@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, ChevronDown, CheckCircle2, AlertCircle, X, ShieldCheck, Zap, Globe, Fuel, ExternalLink, Cloud, ShoppingCart, ShoppingBag, Truck, CreditCard, Mail } from 'lucide-react';
 
 const INITIAL_INTEGRATIONS = [
@@ -21,6 +21,30 @@ export const IntegrationsView = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [activeFilter, setActiveFilter] = useState('Todas');
     const [selectedIntegration, setSelectedIntegration] = useState<any>(null);
+    const [credentials, setCredentials] = useState({ field1: '', field2: '' });
+
+    // Load from localStorage on mount
+    useEffect(() => {
+        const savedIntegrations = localStorage.getItem('erp_integrations');
+        if (savedIntegrations) {
+            try {
+                const parsed = JSON.parse(savedIntegrations);
+                setIntegrations(prev => prev.map(p => {
+                    const saved = parsed.find((s: any) => s.id === p.id);
+                    return saved ? { ...p, ...saved } : p;
+                }));
+            } catch (e) {
+                console.error('Error parsing integrations from localStorage', e);
+            }
+        }
+    }, []);
+
+    // Reset credentials when modal opens
+    useEffect(() => {
+        if (selectedIntegration) {
+            setCredentials({ field1: '', field2: '' });
+        }
+    }, [selectedIntegration]);
 
     const filteredIntegrations = integrations.filter(i => {
         const matchesSearch = i.name.toLowerCase().includes(searchTerm.toLowerCase());
@@ -30,14 +54,68 @@ export const IntegrationsView = () => {
 
     const handleConnect = (e: React.FormEvent) => {
         e.preventDefault();
-        setIntegrations(prev => prev.map(i => i.id === selectedIntegration.id ? { ...i, status: 'connected', lastSync: 'Recién' } : i));
+        
+        const newStatus = { 
+            status: 'connected', 
+            lastSync: 'Recién',
+            // In a real app, we wouldn't store credentials in plain text in localStorage
+            // This is for simulation purposes as requested
+            storedCredentials: credentials 
+        };
+
+        const updatedIntegrations = integrations.map(i => 
+            i.id === selectedIntegration.id ? { ...i, ...newStatus } : i
+        );
+        
+        setIntegrations(updatedIntegrations);
+        
+        // Persist to localStorage
+        // We only save the status and credentials for connected integrations
+        const savedData = updatedIntegrations
+            .filter(i => i.status === 'connected')
+            .map(({ id, status, lastSync, storedCredentials }: any) => ({ id, status, lastSync, storedCredentials }));
+            
+        localStorage.setItem('erp_integrations', JSON.stringify(savedData));
+        
         setSelectedIntegration(null);
     };
 
     const handleDisconnect = () => {
-        setIntegrations(prev => prev.map(i => i.id === selectedIntegration.id ? { ...i, status: 'disconnected' } : i));
+        const updatedIntegrations = integrations.map(i => 
+            i.id === selectedIntegration.id ? { ...i, status: 'disconnected', lastSync: undefined, storedCredentials: undefined } : i
+        );
+        
+        setIntegrations(updatedIntegrations);
+        
+        const savedData = updatedIntegrations
+            .filter(i => i.status === 'connected')
+            .map(({ id, status, lastSync, storedCredentials }: any) => ({ id, status, lastSync, storedCredentials }));
+            
+        localStorage.setItem('erp_integrations', JSON.stringify(savedData));
+        
         setSelectedIntegration(null);
     };
+
+    const getFormConfig = (id: string) => {
+        if (id === 'tiendanube') {
+            return {
+                label1: 'ID de la Tienda',
+                placeholder1: 'Ej: 1234567',
+                label2: 'Token de Acceso',
+                placeholder2: 'Ej: 8a7b6c...',
+                type2: 'text'
+            };
+        }
+        return {
+            label1: 'Client ID',
+            placeholder1: '',
+            label2: 'Secret Key',
+            placeholder2: '••••••••••••',
+            type2: 'password'
+        };
+    };
+
+    const formConfig = selectedIntegration ? getFormConfig(selectedIntegration.id) : null;
 
     const categories = ['Todas', 'Marketplace', 'E-commerce', 'Logística'];
 
@@ -175,12 +253,30 @@ export const IntegrationsView = () => {
                                 <form onSubmit={handleConnect} className="space-y-6">
                                     <div className="space-y-4 text-left">
                                         <div>
-                                            <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">Client ID</label>
-                                            <input required type="text" className="w-full px-5 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none transition-all font-mono" />
+                                            <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">
+                                                {formConfig?.label1}
+                                            </label>
+                                            <input 
+                                                required 
+                                                type="text" 
+                                                value={credentials.field1}
+                                                onChange={(e) => setCredentials(prev => ({ ...prev, field1: e.target.value }))}
+                                                placeholder={formConfig?.placeholder1}
+                                                className="w-full px-5 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none transition-all font-mono" 
+                                            />
                                         </div>
                                         <div>
-                                            <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">Secret Key</label>
-                                            <input required type="password" placeholder="••••••••••••" className="w-full px-5 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none transition-all font-mono" />
+                                            <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">
+                                                {formConfig?.label2}
+                                            </label>
+                                            <input 
+                                                required 
+                                                type={formConfig?.type2} 
+                                                value={credentials.field2}
+                                                onChange={(e) => setCredentials(prev => ({ ...prev, field2: e.target.value }))}
+                                                placeholder={formConfig?.placeholder2}
+                                                className="w-full px-5 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none transition-all font-mono" 
+                                            />
                                         </div>
                                     </div>
                                     <div className="bg-[#f06428]/5 p-4 rounded-xl border border-orange-100 flex gap-3">
